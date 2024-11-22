@@ -47,7 +47,7 @@ class GamesController < ApplicationController
     if @game.destroy
       redirect_to root_path
     else
-      render :new, status: :unprocessable_entity
+      redirect_to root_path
     end 
   end
 
