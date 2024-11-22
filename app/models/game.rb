@@ -1,8 +1,8 @@
 class Game < ApplicationRecord
   extend SteamPriceScraper
 
-	has_many :game_prices, dependent: :delete_all
-	validates :title, presence: true
+  has_many :game_prices, dependent: :delete_all
+  validates :title, presence: true
   validates :game_url, presence: true
 
   def get_game_prices
