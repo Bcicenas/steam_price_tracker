@@ -25,7 +25,7 @@ class GamesController < ApplicationController
     if @game.save
       redirect_to root_path
     else
-      render :new, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 
