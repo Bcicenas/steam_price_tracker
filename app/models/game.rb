@@ -6,6 +6,8 @@ class Game < ApplicationRecord
   validates :game_url, presence: true
 
   def get_game_prices
+    # game_price.game_price[0..-2] - to remove currency symbol
+    # gsub(',', '.') replacing colon with a dot before converting to float
     game_prices.map {|game_price| [game_price.created_at.strftime('%Y-%m-%d %T'), game_price.game_price[0..-2].gsub(',', '.').to_f]}
   end
 

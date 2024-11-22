@@ -4,11 +4,17 @@
   <div class="mt-2">
     <%= form.label :title, class: 'form-label' %><br>
     <%= form.text_field :title, class: 'form-control' %>
+    <% @game.errors.full_messages_for(:title).each do |message| %>
+      <div class="alert alert-danger my-2" role="alert"><%= message %></div>
+    <% end %>    
   </div>
 
   <div class="mt-2">
     <%= form.label :game_url, class: 'form-label' %><br>
     <%= form.text_field :game_url, class: 'form-control' %>
+    <% @game.errors.full_messages_for(:game_url).each do |message| %>
+      <div class="alert alert-danger my-2" role="alert"><%= message %></div>
+    <% end %>       
   </div>
 
   <div class="mt-2">
