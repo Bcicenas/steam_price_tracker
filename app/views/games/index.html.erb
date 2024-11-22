@@ -1,0 +1,31 @@
+<h1 class=" my-3 text-center">Games List</h1>
+
+<br/>
+<br/>
+<%= link_to  'Add new game link', new_game_url, class: 'btn btn-success' %>
+<% if @games.present? %>
+  <table class="table">
+    <thead>
+    	<tr>
+    		<th>Game Title</th>
+    		<th>Store Page Url</th>
+    		<th></th>
+    		<th></th>
+    		<th></th>
+    	</tr>
+    </thead>
+    <tbody>
+  		<% @games.each do |game| %>
+  			<tr>
+  				<td><%= game.title %></td>
+  				<td><%= link_to game.title, game.game_url %></td>
+  				<td><%= link_to 'Show Prices', game_show_prices_url(game), class: 'btn btn-primary' %></td>
+  				<td><%= link_to 'Edit', edit_game_url(game), class: 'btn btn-primary' %></td>
+  				<td><%= button_to 'Delete', game_url(game), method: :delete, class: 'btn btn-danger' %></td>
+  			</tr>
+  		<% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No games present. Press <b>Add new game link</b> to add game links</p>
+<% end %>

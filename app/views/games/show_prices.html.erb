@@ -1,0 +1,76 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<div class="loading text-center">
+  <span class="spinner-border text-light align-middle" role="status">
+  </span>
+  <span class="text-light">
+    Loading..
+  </span>
+</div>
+
+<h3 class="text-center mt-3"><%= @game.title %> Prices</h3>
+
+<div class="my-2  mx-auto" style="width: 150px;">
+  <a id="update_btn" class="btn btn-primary" onclick="return false;" href="#">Check Price</a>
+</div>
+
+<div id="chart_div" style="width: 100%; height: 500px;"></div>
+
+<style type="text/css">
+  .loading{
+    display: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+  }
+</style>
+
+<script type="text/javascript">
+
+  // initialize price array
+  var prices_array = [];
+
+  // display chart
+  function drawChart() {
+    var options = {
+      displayAnnotations: true
+    };
+    var data = new google.visualization.DataTable();
+
+    data.addColumn('date', 'Date');
+    data.addColumn('number', 'Prices');
+    data.addRows(prices_array);
+    var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }
+  
+  // fetch data and draw chart
+  function updateChartData(){
+    $.get("<%= game_get_game_prices_json_url(@game) %>", function(data, status){
+
+      prices_array = data.map(prepareData);
+      google.charts.load('current', {'packages':['annotatedtimeline']});
+      google.charts.setOnLoadCallback(drawChart);
+    });
+  }
+
+  updateChartData();
+
+  // scrape new data and update chart
+  // show loading spinner while data is being processed
+  $('#update_btn').click(function(){
+    $('.loading').show();
+    $.get("<%= game_scrape_game_price_url(@game) %>", function(data, status){
+        updateChartData();
+        $('.loading').hide();
+    });
+  });
+
+  function prepareData(data) {
+    return [new Date(data[0]), data[1]];
+  }
+</script>
