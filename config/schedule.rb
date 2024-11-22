@@ -16,7 +16,7 @@
 # every 4.days do
 #   runner "AnotherModel.prune_old_records"
 # end
-
+set :environment, 'development'
 # Learn more: http://github.com/javan/whenever
 every 5.minutes do
 	runner "Game.scrape_all_games"
