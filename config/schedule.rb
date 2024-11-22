@@ -18,6 +18,6 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-every 1.minutes do
+every 5.minutes do
 	runner "Game.scrape_all_games"
 end
